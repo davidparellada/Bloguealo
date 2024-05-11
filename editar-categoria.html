@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog responsivo</title>
+    <!--Estilos-->
+    <link rel="stylesheet" href="css/styles.css" />
+    <!--CDN Iconscout-->
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.8/css/line.css"
+    />
+    <!--Fuente de google Montserrat-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- ===== Inicio de la sección del nav ===== -->
+    <nav>
+      <div class="contenedor nav__contenedor">
+        <a href="index.html" class="nav__logo">Bloguéalo</a>
+        <ul class="nav__items">
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="about.html">Acerca de</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <!--<li><a href="signin.html">Iniciar sesión</a></li>-->
+          <li class="nav__perfil">
+            <div class="avatar">
+              <img src="images/avatar1.jpg" />
+            </div>
+            <ul>
+              <li><a href="panel.html">Panel</a></li>
+              <li><a href="logout.html">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <button id="abrir__nav-btn"><i class="uil uil-bars"></i></button>
+        <button id="cerrar__nav-btn"><i class="uil uil-multiply"></i></button>
+      </div>
+    </nav>
+    <!--======== Fin de la sección del nav ========-->
+    <section class="form__seccion">
+      <div class="contenedor form__seccion-contenedor">
+        <h2>Editar categoría</h2>
+        <form class="formulario" enctype="multipart/form-data" action="">
+          <input type="text" placeholder="Nombre de la categoría" />
+          <textarea rows="4" placeholder="Descripción"></textarea>
+          <button type="submit" class="btn">Editar</button>
+        </form>
+      </div>
+    </section>
+    <!-- ===== Inicio del footer ===== -->
+    <footer>
+      <div class="footer__redes">
+        <a href="https://github.com/davidparellada/Bloguealo" target="_blank"
+          ><i class="uil uil-github"></i
+        ></a>
+        <a href="https://www.youtube.com/" target="_blank"
+          ><i class="uil uil-youtube"></i
+        ></a>
+      </div>
+
+      <div class="contenedor footer__contenedor">
+        <article>
+          <h4>Categorías</h4>
+          <ul>
+            <li><a href="">Animales</a></li>
+            <li><a href="">Cocina</a></li>
+            <li><a href="">Viaje</a></li>
+            <li><a href="">Arte</a></li>
+            <li><a href="">Tecnología</a></li>
+            <li><a href="">Ciencia</a></li>
+            <li><a href="">Deportes</a></li>
+            <li><a href="">Entretenimiento</a></li>
+          </ul>
+        </article>
+        <article>
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="">Soporte online</a></li>
+            <li><a href="">Teléfonos</a></li>
+            <li><a href="">Ubicación</a></li>
+          </ul>
+        </article>
+        <article>
+          <h4>Descubre</h4>
+          <ul>
+            <li><a href="">Reciente</a></li>
+            <li><a href="">Popular</a></li>
+            <li><a href="">Categorías</a></li>
+          </ul>
+        </article>
+        <article>
+          <h4>Nuestra empresa</h4>
+          <ul>
+            <li><a href="">Blog</a></li>
+            <li><a href="">Acerca de</a></li>
+            <li><a href="">Servicios</a></li>
+            <li><a href="">Contacto</a></li>
+          </ul>
+        </article>
+      </div>
+      <div class="footer__copyright">
+        <small>Copyright &copy; BlogIt</small>
+      </div>
+    </footer>
+    <!-- ===== Fin del footer ===== -->
+    <script src="./main.js"></script>
+  </body>
+</html>
