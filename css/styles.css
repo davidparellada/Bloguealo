@@ -60,6 +60,10 @@ section {
   width: 100vw;
 }
 
+.seccion__margen-extra {
+  margin-top: 7rem;
+}
+
 h1,
 h2,
 h3,
@@ -435,6 +439,10 @@ footer ul a:hover {
   margin: 0.8rem 0;
   border-radius: var(--radius-2);
   width: fit-content;
+}
+
+.mensaje__alerta.grande {
+  text-align: center;
 }
 
 .mensaje__alerta.error {
