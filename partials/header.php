@@ -1,5 +1,13 @@
 <?php
-require 'config/bd.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/Bloguealo/config/bd.php';
+
+// Fetch el campo avatar que tiene el nombre del archivo
+if (isset($_SESSION['usuario-id'])) {
+  $id = filter_var($_SESSION['usuario-id'], FILTER_SANITIZE_NUMBER_INT);
+  $avatar_fetch_query = "SELECT avatar from usuarios where id=$id";
+  $avatar_fetch_result = mysqli_query($con, $avatar_fetch_query);
+  $avatar = mysqli_fetch_assoc($avatar_fetch_result);
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,16 +37,19 @@ require 'config/bd.php';
         <li><a href="<?= ROOT_URL ?>about.php">Acerca de</a></li>
         <li><a href="<?= ROOT_URL ?>servicios.php">Servicios</a></li>
         <li><a href="<?= ROOT_URL ?>contacto.php">Contacto</a></li>
-        <li><a href="<?= ROOT_URL ?>signin.php">Iniciar sesión</a></li>
-        <!-- <li class="nav__perfil">
+        <?php if (isset($_SESSION['usuario-id'])) : ?>
+          <li class="nav__perfil">
             <div class="avatar">
-              <img src="images/avatar1.jpg" />
+              <img src="<?= ROOT_URL . 'images/' . $avatar['avatar'] ?>" />
             </div>
             <ul>
               <li><a href="<?= ROOT_URL ?>admin/index.php">Panel</a></li>
               <li><a href="<?= ROOT_URL ?>logout.php">Logout</a></li>
             </ul>
-          </li> -->
+          </li>
+        <?php else : ?>
+          <li><a href="<?= ROOT_URL ?>signin.php">Iniciar sesión</a></li>
+        <?php endif ?>
       </ul>
 
       <button id="abrir__nav-btn"><i class="uil uil-bars"></i></button>
