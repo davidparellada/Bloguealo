@@ -1,5 +1,5 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'] . '/Bloguealo/config/bd.php';
+require 'config/bd.php';
 
 // Fetch el campo avatar que tiene el nombre del archivo
 if (isset($_SESSION['usuario-id'])) {

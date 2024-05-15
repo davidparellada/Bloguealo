@@ -51,7 +51,7 @@ unset($_SESSION['signup_datos']);
         <input type="password" name="confirmarpass" value="<?= $confirmarpass ?>" placeholder="Confirmar contraseña" />
         <div class="form__subir">
           <label for="avatar">Avatar</label>
-          <input type="file" name="avatar" id="avatar" />
+          <input type="file" name="avatar" id="avatar" accept="image/jpg,image/png,image/jpeg" />
         </div>
         <button type="submit" name="submit" class="btn">Registrar</button>
         <small><a href="signin.php">Ya tengo cuenta una de bloguéalo</a></small>
