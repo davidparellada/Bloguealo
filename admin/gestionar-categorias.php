@@ -1,8 +1,55 @@
 <?php
-include 'partials/header.php'
+include 'partials/header.php';
+
+// Fetch categorías de la bd
+$gestionarcategorias_fetch_query = "SELECT * FROM categorias ORDER BY titulo";
+$gestionarcategorias_fetch_result = mysqli_query($con, $gestionarcategorias_fetch_query);
 ?>
 
 <section class="panel">
+  <?php if (isset($_SESSION['add-categoria-ok'])) : ?>
+    <div class="mensaje__alerta ok">
+      <p>
+        <?= $_SESSION['add-categoria-ok'];
+        unset($_SESSION['add-categoria-ok']);
+        ?>
+      </p>
+    </div>
+    <!-- Mensaje de éxito/error al editar usuario -->
+  <?php elseif (isset($_SESSION['editar-categoria-ok'])) : ?>
+    <div class="mensaje__alerta ok">
+      <p>
+        <?= $_SESSION['editar-categoria-ok'];
+        unset($_SESSION['editar-categoria-ok']);
+        ?>
+      </p>
+    </div>
+  <?php elseif (isset($_SESSION['editar-categoria'])) : ?>
+    <div class="mensaje__alerta error">
+      <p>
+        <?= $_SESSION['editar-categoria'];
+        unset($_SESSION['editar-categoria']);
+        ?>
+      </p>
+    </div>
+    <!-- Mensaje de éxito/error al eliminar categoría -->
+  <?php elseif (isset($_SESSION['eliminar-categoria-ok'])) : ?>
+    <div class="mensaje__alerta ok">
+      <p>
+        <?= $_SESSION['eliminar-categoria-ok'];
+        unset($_SESSION['eliminar-categoria-ok']);
+        ?>
+      </p>
+    </div>
+  <?php elseif (isset($_SESSION['eliminar-categoria'])) : ?>
+    <div class="mensaje__alerta error">
+      <p>
+        <?= $_SESSION['eliminar-categoria'];
+        unset($_SESSION['eliminar-categoria']);
+        ?>
+      </p>
+    </div>
+  <?php endif ?>
   <div class="contenedor panel__contenedor">
     <aside>
       <ul>
@@ -51,33 +98,17 @@ include 'partials/header.php'
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Animales</td>
-            <td>
-              <a href="editar-categoria.php" class="btn mini">Editar</a>
-            </td>
-            <td>
-              <a href="eliminar-categoria.php" class="btn mini rojo">Eliminar</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Cocina</td>
-            <td>
-              <a href="editar-categoria.php" class="btn mini">Editar</a>
-            </td>
-            <td>
-              <a href="eliminar-categoria.php" class="btn mini rojo">Eliminar</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Viaje</td>
-            <td>
-              <a href="editar-categoria.php" class="btn mini">Editar</a>
-            </td>
-            <td>
-              <a href="eliminar-categoria.php" class="btn mini rojo">Eliminar</a>
-            </td>
-          </tr>
+          <?php while ($categoria = mysqli_fetch_assoc($gestionarcategorias_fetch_result)) : ?>
+            <tr>
+              <td><?= $categoria['titulo'] ?></td>
+              <td>
+                <a href="<?= ROOT_URL ?>admin/editar-categoria.php?id=<?= $categoria['id'] ?>" class="btn mini">Editar</a>
+              </td>
+              <td>
+                <a href="<?= ROOT_URL ?>admin/eliminar-categoria.php?id=<?= $categoria['id'] ?>" class="btn mini rojo">Eliminar</a>
+              </td>
+            </tr>
+          <?php endwhile ?>
         </tbody>
       </table>
     </main>

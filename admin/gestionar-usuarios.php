@@ -19,6 +19,7 @@ $gestionarusuarios_fetch_result = mysqli_query($con, $gestionarusuarios_fetch_qu
         ?>
       </p>
     </div>
+    <!-- Mensaje de éxito/error al editar usuario -->
   <?php elseif (isset($_SESSION['editar-usuario-ok'])) : ?>
     <div class="mensaje__alerta ok">
       <p>
@@ -35,7 +36,28 @@ $gestionarusuarios_fetch_result = mysqli_query($con, $gestionarusuarios_fetch_qu
         ?>
       </p>
     </div>
+    <!-- Mensaje de éxito/error al eliminar usuario -->
+  <?php elseif (isset($_SESSION['eliminar-usuario-ok'])) : ?>
+    <div class="mensaje__alerta ok">
+      <p>
+        <?= $_SESSION['eliminar-usuario-ok'];
+        unset($_SESSION['eliminar-usuario-ok']);
+        ?>
+      </p>
+    </div>
+  <?php elseif (isset($_SESSION['eliminar-usuario'])) : ?>
+    <div class="mensaje__alerta error">
+      <p>
+        <?= $_SESSION['eliminar-usuario'];
+        unset($_SESSION['eliminar-usuario']);
+        ?>
+      </p>
+    </div>
   <?php endif ?>
+
+
+
+
 
   <div class="contenedor panel__contenedor">
     <aside>
@@ -95,7 +117,7 @@ $gestionarusuarios_fetch_result = mysqli_query($con, $gestionarusuarios_fetch_qu
                 <a href="<?= ROOT_URL ?>admin/editar-usuario.php?id=<?= $usuario['id'] ?>" class="btn mini">Editar</a>
               </td>
               <td>
-                <a href="eliminar-usuario.php?id=<?= $usuario['id'] ?>" class="btn mini rojo">Eliminar</a>
+                <a href="<?= ROOT_URL ?>admin/eliminar-usuario.php?id=<?= $usuario['id'] ?>" class="btn mini rojo">Eliminar</a>
               </td>
               <td>
                 <?= $usuario['admin_check'] == 1 ? "Sí" : "No" ?>
