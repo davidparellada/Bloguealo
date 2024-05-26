@@ -1,8 +1,42 @@
 <?php
-include 'partials/header.php'
+include 'partials/header.php';
+
+// Fetch usuarios de la bd
+$id_actual = $_SESSION['usuario-id'];
+$gestionarusuarios_fetch_query = "select * from usuarios where not id=$id_actual";
+$gestionarusuarios_fetch_result = mysqli_query($con, $gestionarusuarios_fetch_query);
+
 ?>
 
+
+<!-- Mensaje de éxito al añadir usuario -->
 <section class="panel">
+  <?php if (isset($_SESSION['add-usuario-ok'])) : ?>
+    <div class="mensaje__alerta ok">
+      <p>
+        <?= $_SESSION['add-usuario-ok'];
+        unset($_SESSION['add-usuario-ok']);
+        ?>
+      </p>
+    </div>
+  <?php elseif (isset($_SESSION['editar-usuario-ok'])) : ?>
+    <div class="mensaje__alerta ok">
+      <p>
+        <?= $_SESSION['editar-usuario-ok'];
+        unset($_SESSION['editar-usuario-ok']);
+        ?>
+      </p>
+    </div>
+  <?php elseif (isset($_SESSION['editar-usuario'])) : ?>
+    <div class="mensaje__alerta error">
+      <p>
+        <?= $_SESSION['editar-usuario'];
+        unset($_SESSION['editar-usuario']);
+        ?>
+      </p>
+    </div>
+  <?php endif ?>
+
   <div class="contenedor panel__contenedor">
     <aside>
       <ul>
@@ -53,39 +87,21 @@ include 'partials/header.php'
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Maria</td>
-            <td>mariamontserrat</td>
-            <td>
-              <a href="editar-usuario.php" class="btn mini">Editar</a>
-            </td>
-            <td>
-              <a href="eliminar-usuario.php" class="btn mini rojo">Eliminar</a>
-            </td>
-            <td>Admin</td>
-          </tr>
-          <tr>
-            <td>Erneko</td>
-            <td>Ernekoarnaiz</td>
-            <td>
-              <a href="editar-usuario.php" class="btn mini">Editar</a>
-            </td>
-            <td>
-              <a href="eliminar-usuario.php" class="btn mini rojo">Eliminar</a>
-            </td>
-            <td>Admin</td>
-          </tr>
-          <tr>
-            <td>Erneko</td>
-            <td>Ernekoarnaiz</td>
-            <td>
-              <a href="editar-usuario.php" class="btn mini">Editar</a>
-            </td>
-            <td>
-              <a href="eliminar-usuario.php" class="btn mini rojo">Eliminar</a>
-            </td>
-            <td>Admin</td>
-          </tr>
+          <?php while ($usuario = mysqli_fetch_assoc($gestionarusuarios_fetch_result)) : ?>
+            <tr>
+              <td><?= $usuario['nombre'] ?></td>
+              <td><?= $usuario['usuario'] ?></td>
+              <td>
+                <a href="<?= ROOT_URL ?>admin/editar-usuario.php?id=<?= $usuario['id'] ?>" class="btn mini">Editar</a>
+              </td>
+              <td>
+                <a href="eliminar-usuario.php?id=<?= $usuario['id'] ?>" class="btn mini rojo">Eliminar</a>
+              </td>
+              <td>
+                <?= $usuario['admin_check'] == 1 ? "Sí" : "No" ?>
+              </td>
+            </tr>
+          <?php endwhile ?>
         </tbody>
       </table>
     </main>
