@@ -1,46 +1,45 @@
 <?php
 include 'partials/header.php';
+
+// Fetch post con el id de la url
+if (isset($_GET['id'])) {
+  $post_id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
+  $post_fetch_query = "SELECT * FROM posts WHERE id=$post_id";
+  $post_fetch_resultado = mysqli_query($con, $post_fetch_query);
+  $post = mysqli_fetch_assoc($post_fetch_resultado);
+} else {
+  header('location: ' . ROOT_URL . 'blog.php');
+  die();
+}
 ?>
 
-    <!-- ===== Inicio de la sección del post ===== -->
-    <section class="post-full">
-      <div class="contenedor post-full__contenedor">
-        <h2>Título de ejemplo para la página de blog.html</h2>
-        <div class="post__autor">
-          <div class="post__autor-avatar">
-            <img src="./images/avatar2.jpg" />
-          </div>
-          <div class="post__autor-info">
-            <h5>Autor: Maria Montserrat</h5>
-            <small>8 de mayo, 2024 - 14:46</small>
-          </div>
-        </div>
-        <div class="post-full__thumbnail">
-          <img src="./images/thumbnail5.jpg" />
-        </div>
-        <p>
-          Este es un texto de ejemplo con cuarenta palabras exactas para mostrar
-          cómo se estructura una oración coherente y fluida, manteniendo la
-          claridad y concisión en la comunicación escrita.
-        </p>
-        <p>
-          Este es un texto de ejemplo con cuarenta palabras exactas para mostrar
-          cómo se estructura una oración coherente y fluida, manteniendo la
-          claridad y concisión en la comunicación escrita.
-        </p>
-        <p>
-          Este es un texto de ejemplo con cuarenta palabras exactas para mostrar
-          cómo se estructura una oración coherente y fluida, manteniendo la
-          claridad y concisión en la comunicación escrita.
-        </p>
-        <p>
-          Este es un texto de ejemplo con cuarenta palabras exactas para mostrar
-          cómo se estructura una oración coherente y fluida, manteniendo la
-          claridad y concisión en la comunicación escrita.
-        </p>
+<!-- ===== Inicio de la sección del post ===== -->
+<section class="post-full">
+  <div class="contenedor post-full__contenedor">
+    <h2><?= $post['titulo'] ?></h2>
+    <div class="post__autor">
+      <!-- Fetch autor -->
+      <?php
+      $autor_id = $post['autor_id'];
+      $autor_query = "SELECT * FROM usuarios WHERE id=$autor_id";
+      $autor_resultado = mysqli_query($con, $autor_query);
+      $autor = mysqli_fetch_assoc($autor_resultado);
+      ?>
+      <div class="post__autor-avatar">
+        <img src="./images/<?= $autor['avatar'] ?>" />
       </div>
-    </section>
-    <!-- ===== Fin de la sección del post ===== -->
+      <div class="post__autor-info">
+        <h5>Autor: <?= "{$autor['nombre']} {$autor['apellido']}" ?></h5>
+        <small><?= date("d M, Y - H:i", strtotime($post['fecha_hora'])) ?></small>
+      </div>
+    </div>
+    <div class="post-full__thumbnail">
+      <img src="./images/<?= $post['thumbnail'] ?>" />
+    </div>
+    <p> <?= $post['body'] ?></p>
+  </div>
+</section>
+<!-- ===== Fin de la sección del post ===== -->
 
 <?php
 include 'partials/footer.php';

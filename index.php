@@ -1,227 +1,122 @@
 <?php
 include 'partials/header.php';
+
+// Fetch post destacado
+$destacado_query = "SELECT * FROM posts WHERE destacado_check=1";
+$destacado_resultado = mysqli_query($con, $destacado_query);
+$destacado = mysqli_fetch_assoc($destacado_resultado);
+
+// Fetch los 9 post más recientes
+$posts_query = "SELECT * FROM posts ORDER by fecha_hora DESC LIMIT 9";
+$posts_resultado = mysqli_query($con, $posts_query);
 ?>
 
 
-    <!-- ===== Inicio de la sección de post destacado ===== -->
-    <section class="destacado">
-      <div class="contenedor destacado__contenedor">
+<!-- ===== Inicio de la sección de post destacado ===== -->
+<?php if (mysqli_num_rows($destacado_resultado) == 1) : ?>
+  <section class="destacado">
+    <div class="contenedor destacado__contenedor">
+      <div class="post__thumbnail">
+        <img src="./images/<?= $destacado['thumbnail'] ?>" />
+      </div>
+      <!-- Fetch nombre de la categoría -->
+      <?php
+      $categoria_id = $destacado['categoria_id'];
+      $categoria_query = "SELECT * FROM categorias WHERE id=$categoria_id";
+      $categoria_resultado = mysqli_query($con, $categoria_query);
+      $categoria = mysqli_fetch_assoc($categoria_resultado);
+      $categoria_titulo = $categoria['titulo'];
+      ?>
+      <div class="post__info">
+        <a href="<?= ROOT_URL ?>categoria-posts.php?id=<?= $categoria_id ?>" class="categoria__btn"><?= $categoria_titulo ?></a>
+        <h2 class="post__titulo">
+          <a href="<?= ROOT_URL ?>post.php?id=<?= $destacado['id'] ?>"><?= $destacado['titulo'] ?></a>
+        </h2>
+        <p class="post__body">
+          <?= substr($destacado['body'], 0, 300) ?>...
+        </p>
+        <div class="post__autor">
+          <!-- Fetch autor -->
+          <?php
+          $autor_id = $destacado['autor_id'];
+          $autor_query = "SELECT * FROM usuarios WHERE id=$autor_id";
+          $autor_resultado = mysqli_query($con, $autor_query);
+          $autor = mysqli_fetch_assoc($autor_resultado);
+          ?>
+          <div class="post__autor-avatar">
+            <img src="./images/<?= $autor['avatar'] ?>" />
+          </div>
+          <div class="post__autor-info">
+            <h5>Autor: <?= "{$autor['nombre']} {$autor['apellido']}" ?></h5>
+            <small><?= date("d M, Y - H:i", strtotime($destacado['fecha_hora'])) ?></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<?php endif ?>
+<!--======= Fin de la sección de post destacado -->
+
+<!-- ===== Inicio de la sección de posts===== -->
+<section class="posts">
+  <div class="contenedor posts__contenedor">
+    <?php while ($post = mysqli_fetch_assoc($posts_resultado)) : ?>
+      <article class="post">
         <div class="post__thumbnail">
-          <img src="./images/thumbnail1.jpg" />
+          <img src="./images/<?= $post['thumbnail'] ?>" />
         </div>
         <div class="post__info">
-          <a href="" class="categoria__btn">Animales</a>
-          <h2 class="post__titulo">
-            <a href="post.html">Aprende a cuidar de tu perro</a>
-          </h2>
+          <!-- Fetch nombre de la categoría -->
+          <?php
+          $categoria_id = $post['categoria_id'];
+          $categoria_query = "SELECT * FROM categorias WHERE id=$categoria_id";
+          $categoria_resultado = mysqli_query($con, $categoria_query);
+          $categoria = mysqli_fetch_assoc($categoria_resultado);
+          ?>
+          <a href="<?= ROOT_URL ?>categoria-posts.php?id=<?= $post['categoria_id'] ?>" class="categoria__btn"><?= $categoria['titulo'] ?></a>
+          <h3 class="post__titulo">
+            <a href="<?= ROOT_URL ?>post.php?id=<?= $post['id'] ?>"><?= $post['titulo'] ?></a>
+          </h3>
           <p class="post__body">
-            En este artículo podrás aprender a cuidar de tu perro recién
-            adoptado. Entra al artículo para ver más!
+            <?= substr($post['body'], 0, 200) ?>...
           </p>
           <div class="post__autor">
+            <!-- Fetch autor -->
+            <?php
+            $autor_id = $post['autor_id'];
+            $autor_query = "SELECT * FROM usuarios WHERE id=$autor_id";
+            $autor_resultado = mysqli_query($con, $autor_query);
+            $autor = mysqli_fetch_assoc($autor_resultado);
+            ?>
             <div class="post__autor-avatar">
-              <img src="./images/avatar2.jpg" />
+              <img src="./images/<?= $autor['avatar'] ?>" />
             </div>
             <div class="post__autor-info">
-              <h5>Autor: Maria Montserrat</h5>
-              <small>8 de mayo, 2024 - 14:46</small>
+              <h5>Autor: <?= "{$autor['nombre']} {$autor['apellido']}" ?></h5>
+              <small><?= date("d M, Y - H:i", strtotime($post['fecha_hora'])) ?></small>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-    <!--======= Fin de la sección de post destacado -->
+      </article>
+    <?php endwhile ?>
+  </div>
+</section>
+<!-- ===== Fin de la sección de posts ===== -->
 
-    <!-- ===== Inicio de la sección de posts===== -->
-    <section class="posts">
-      <div class="contenedor posts__contenedor">
-        <article class="post">
-          <div class="post__thumbnail">
-            <img src="./images/thumbnail2.jpg" />
-          </div>
-          <div class="post__info">
-            <a href="" class="categoria__btn">Cocina</a>
-            <h3 class="post__titulo">
-              <a href="post.html">Aprende a preparar galletas de chocolate</a>
-            </h3>
-            <p class="post__body">
-              Descubre cómo crear galletas de chocolate crujientes por fuera y
-              tiernas por dentro con esta receta.
-            </p>
-            <div class="post__autor">
-              <div class="post__autor-avatar">
-                <img src="./images/avatar3.jpg" />
-              </div>
-              <div class="post__autor-info">
-                <h5>Autor: Eneko Arnaiz</h5>
-                <small>8 de mayo, 2024 - 18:16</small>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="post">
-          <div class="post__thumbnail">
-            <img src="./images/thumbnail3.jpg" />
-          </div>
-          <div class="post__info">
-            <a href="" class="categoria__btn">Cocina</a>
-            <h3 class="post__titulo">
-              <a href="post.html">Aprende a preparar galletas de chocolate</a>
-            </h3>
-            <p class="post__body">
-              Descubre cómo crear galletas de chocolate crujientes por fuera y
-              tiernas por dentro con esta receta.
-            </p>
-            <div class="post__autor">
-              <div class="post__autor-avatar">
-                <img src="./images/avatar4.jpg" />
-              </div>
-              <div class="post__autor-info">
-                <h5>Autor: Eneko Arnaiz</h5>
-                <small>8 de mayo, 2024 - 18:16</small>
-              </div>
-            </div>
-          </div>
-        </article>
-        <article class="post">
-          <div class="post__thumbnail">
-            <img src="./images/thumbnail4.jpg" />
-          </div>
-          <div class="post__info">
-            <a href="" class="categoria__btn">Cocina</a>
-            <h3 class="post__titulo">
-              <a href="post.html">Aprende a preparar galletas de chocolate</a>
-            </h3>
-            <p class="post__body">
-              Descubre cómo crear galletas de chocolate crujientes por fuera y
-              tiernas por dentro con esta receta.
-            </p>
-            <div class="post__autor">
-              <div class="post__autor-avatar">
-                <img src="./images/avatar5.jpg" />
-              </div>
-              <div class="post__autor-info">
-                <h5>Autor: Eneko Arnaiz</h5>
-                <small>8 de mayo, 2024 - 18:16</small>
-              </div>
-            </div>
-          </div>
-        </article>
-        <article class="post">
-          <div class="post__thumbnail">
-            <img src="./images/thumbnail5.jpg" />
-          </div>
-          <div class="post__info">
-            <a href="" class="categoria__btn">Cocina</a>
-            <h3 class="post__titulo">
-              <a href="post.html">Aprende a preparar galletas de chocolate</a>
-            </h3>
-            <p class="post__body">
-              Descubre cómo crear galletas de chocolate crujientes por fuera y
-              tiernas por dentro con esta receta.
-            </p>
-            <div class="post__autor">
-              <div class="post__autor-avatar">
-                <img src="./images/avatar6.jpg" />
-              </div>
-              <div class="post__autor-info">
-                <h5>Autor: Eneko Arnaiz</h5>
-                <small>8 de mayo, 2024 - 18:16</small>
-              </div>
-            </div>
-          </div>
-        </article>
-        <article class="post">
-          <div class="post__thumbnail">
-            <img src="./images/thumbnail6.jpg" />
-          </div>
-          <div class="post__info">
-            <a href="" class="categoria__btn">Cocina</a>
-            <h3 class="post__titulo">
-              <a href="post.html">Aprende a preparar galletas de chocolate</a>
-            </h3>
-            <p class="post__body">
-              Descubre cómo crear galletas de chocolate crujientes por fuera y
-              tiernas por dentro con esta receta.
-            </p>
-            <div class="post__autor">
-              <div class="post__autor-avatar">
-                <img src="./images/avatar7.jpg" />
-              </div>
-              <div class="post__autor-info">
-                <h5>Autor: Eneko Arnaiz</h5>
-                <small>8 de mayo, 2024 - 18:16</small>
-              </div>
-            </div>
-          </div>
-        </article>
-        <article class="post">
-          <div class="post__thumbnail">
-            <img src="./images/thumbnail7.jpg" />
-          </div>
-          <div class="post__info">
-            <a href="" class="categoria__btn">Cocina</a>
-            <h3 class="post__titulo">
-              <a href="post.html">Aprende a preparar galletas de chocolate</a>
-            </h3>
-            <p class="post__body">
-              Descubre cómo crear galletas de chocolate crujientes por fuera y
-              tiernas por dentro con esta receta.
-            </p>
-            <div class="post__autor">
-              <div class="post__autor-avatar">
-                <img src="./images/avatar8.jpg" />
-              </div>
-              <div class="post__autor-info">
-                <h5>Autor: Eneko Arnaiz</h5>
-                <small>8 de mayo, 2024 - 18:16</small>
-              </div>
-            </div>
-          </div>
-        </article>
-        <article class="post">
-          <div class="post__thumbnail">
-            <img src="./images/thumbnail8.jpg" />
-          </div>
-          <div class="post__info">
-            <a href="" class="categoria__btn">Cocina</a>
-            <h3 class="post__titulo">
-              <a href="post.html">Aprende a preparar galletas de chocolate</a>
-            </h3>
-            <p class="post__body">
-              Descubre cómo crear galletas de chocolate crujientes por fuera y
-              tiernas por dentro con esta receta.
-            </p>
-            <div class="post__autor">
-              <div class="post__autor-avatar">
-                <img src="./images/avatar9.jpg" />
-              </div>
-              <div class="post__autor-info">
-                <h5>Autor: Eneko Arnaiz</h5>
-                <small>8 de mayo, 2024 - 18:16</small>
-              </div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-    <!-- ===== Fin de la sección de posts ===== -->
-
-    <!-- ===== Inicio de la sección de categorías ===== -->
-    <section class="categoria__btns">
-      <div class="contenedor categoria__btns-contenedor">
-        <a href="" class="categoria__btn">Animales</a>
-        <a href="" class="categoria__btn">Cocina</a>
-        <a href="" class="categoria__btn">Viaje</a>
-        <a href="" class="categoria__btn">Arte</a>
-        <a href="" class="categoria__btn">Tecnología</a>
-        <a href="" class="categoria__btn">Ciencia</a>
-        <a href="" class="categoria__btn">Deportes</a>
-        <a href="" class="categoria__btn">Entretenimiento</a>
-      </div>
-    </section>
-    <!-- ===== Fin de la sección de categorías ===== -->
+<!-- ===== Inicio de la sección de categorías ===== -->
+<section class="categoria__btns">
+  <div class="contenedor categoria__btns-contenedor">
+    <!-- Fetch todas las categorías -->
+    <?php
+    $categorias_all_query = "SELECT * FROM categorias";
+    $categorias_all_resultado = mysqli_query($con, $categorias_all_query);
+    ?>
+    <?php while ($categoria_loop = mysqli_fetch_assoc($categorias_all_resultado)) : ?>
+      <a href="<?= ROOT_URL ?>categoria-posts.php?id=<?= $categoria_loop['id'] ?>" class="categoria__btn"><?= $categoria_loop['titulo'] ?></a>
+    <?php endwhile ?>
+  </div>
+</section>
+<!-- ===== Fin de la sección de categorías ===== -->
 
 <?php
 include 'partials/footer.php'

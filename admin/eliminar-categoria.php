@@ -8,7 +8,7 @@ if (isset($_GET['id'])) {
 
     // Descategorizar los post de la categoría a eliminar
     $categoria_actualizar_query = "UPDATE posts SET categoria_id=5 WHERE categoria_id=$id";
-    $categoria_actualizar_resultado = mysqli_query($con, $categoria_actualizar_resultado);
+    $categoria_actualizar_resultado = mysqli_query($con, $categoria_actualizar_query);
     if (!mysqli_errno($con)) {
 
         // Borrar categoría

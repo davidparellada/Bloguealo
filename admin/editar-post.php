@@ -35,10 +35,13 @@ if (isset($_GET['id'])) {
         <label for="foto">Cambiar foto</label>
         <input type="file" name="thumbnail" id="foto" accept="image/jpg,image/png,image/jpeg">
       </div>
-      <div class="form__marcar">
-        <input type="checkbox" name="destacado" id="destacado" value="1" checked>
-        <label for "destacado">Mostrar como destacado</label>
-      </div>
+      <!-- Podemos marcar destacado si el usuario logueado es admin -->
+      <?php if (isset($_SESSION['usuario_admin'])) : ?>
+        <div class="form__marcar">
+          <input type="checkbox" name="destacado" id="destacado" value="1" checked>
+          <label for "destacado">Mostrar como destacado</label>
+        </div>
+      <?php endif ?>
       <button type="submit" name="submit" class="btn">Editar</button>
     </form>
   </div>
