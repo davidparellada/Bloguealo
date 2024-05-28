@@ -58,7 +58,7 @@ $posts_resultado = mysqli_query($con, $posts_query);
 <!--======= Fin de la sección de post destacado -->
 
 <!-- ===== Inicio de la sección de posts===== -->
-<section class="posts">
+<section class="posts <?= $destacado ? '' : 'seccion__margen-extra' ?>">
   <div class="contenedor posts__contenedor">
     <?php while ($post = mysqli_fetch_assoc($posts_resultado)) : ?>
       <article class="post">

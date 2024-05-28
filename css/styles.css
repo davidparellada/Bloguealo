@@ -212,7 +212,7 @@ nav button {
   border: 0.5rem solid var(--color-primario);
   overflow: hidden;
   margin-bottom: 1.6rem;
-  width: 300px;
+  width: 350px;
   height: 200px;
 }
 
@@ -465,8 +465,13 @@ footer ul a:hover {
   width: fit-content;
 }
 
-.mensaje__alerta.grande {
+.mensaje__alerta.margen {
+  margin-top: 7rem;
+}
+
+.mensaje__alerta.busqueda {
   text-align: center;
+  width: 100%;
 }
 
 .mensaje__alerta.error {
