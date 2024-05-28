@@ -15,7 +15,21 @@ if (isset($_GET['id'])) {
         if (isset($avatar_ruta)) {
             unlink($avatar_ruta);
         }
-        //Borrar posts 
+        //Borrar thumbnails de los post
+        $thumbnail_eliminar_query = "SELECT thumbnail FROM posts WHERE autor_id=$id";
+        $thumbnail_eliminar_result = mysqli_query($con, $thumbnail_eliminar_query);
+
+        if (mysqli_num_rows($thumbnail_eliminar_result) > 0) {
+            while ($thumbnail = mysqli_fetch_assoc($thumbnail_eliminar_result)) {
+                $thumbnail_ruta = '../images/' . $thumbnail['thumbnail'];
+                if ($thumbnail_ruta) {
+                    unlink($thumbnail_ruta);
+                }
+            }
+        }
+
+
+
         // Borrar usuario de la bd
         $usuario_eliminar_query = "DELETE from usuarios where id=$id LIMIT 1";
         $usuario_eliminar_resultado = mysqli_query($con, $usuario_eliminar_query);

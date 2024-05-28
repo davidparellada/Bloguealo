@@ -34,7 +34,25 @@ $gestionarposts_fetch_result = mysqli_query($con, $gestionarposts_fetch_query);
         ?>
       </p>
     </div>
+    <!-- Mensaje de éxito/error al eliminar categoría -->
+  <?php elseif (isset($_SESSION['eliminar-post-ok'])) : ?>
+    <div class="mensaje__alerta ok">
+      <p>
+        <?= $_SESSION['eliminar-post-ok'];
+        unset($_SESSION['eliminar-post-ok']);
+        ?>
+      </p>
+    </div>
+  <?php elseif (isset($_SESSION['eliminar-post'])) : ?>
+    <div class="mensaje__alerta error">
+      <p>
+        <?= $_SESSION['eliminar-post'];
+        unset($_SESSION['eliminar-post']);
+        ?>
+      </p>
+    </div>
   <?php endif ?>
+
   <div class="contenedor panel__contenedor">
     <aside>
       <ul>
