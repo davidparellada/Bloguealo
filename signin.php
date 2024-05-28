@@ -32,7 +32,7 @@ unset($_SESSION['signin_datos']);
       <?php if (isset($_SESSION['signup-ok'])) : ?>
         <div class="mensaje__alerta ok">
           <p>
-            <?= [$_SESSION['signup-ok']];
+            <?= $_SESSION['signup-ok'];
             unset($_SESSION['signup-ok']);
             ?>
           </p>
