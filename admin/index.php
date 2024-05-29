@@ -3,7 +3,11 @@ include 'partials/header.php';
 
 // Fetch posts del usuario actual
 $id_actual = $_SESSION['usuario-id'];
-$gestionarposts_fetch_query = "SELECT id, titulo, categoria_id FROM posts WHERE autor_id=$id_actual ORDER BY id DESC";
+if (isset($_SESSION['usuario_admin'])) {
+  $gestionarposts_fetch_query = "SELECT id, titulo, categoria_id FROM posts ORDER BY id DESC";
+} else {
+  $gestionarposts_fetch_query = "SELECT id, titulo, categoria_id FROM posts WHERE autor_id=$id_actual ORDER BY id DESC";
+}
 $gestionarposts_fetch_result = mysqli_query($con, $gestionarposts_fetch_query);
 ?>
 
