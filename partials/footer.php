@@ -2,7 +2,7 @@
 <footer>
   <div class="footer__redes">
     <a href="https://github.com/davidparellada/Bloguealo" target="_blank"><i class="uil uil-github"></i></a>
-    <a href="https://www.youtube.com/" target="_blank"><i class="uil uil-youtube"></i></a>
+    <a href="https://www.youtube.com/watch?v=zZsJ87Euf8M" target="_blank"><i class="uil uil-youtube"></i></a>
   </div>
 
   <div class="contenedor footer__contenedor">
